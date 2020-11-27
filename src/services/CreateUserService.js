@@ -1,17 +1,17 @@
 const { hash } = require('bcryptjs');
-const { User } = require('../models');
+const UsersRepository = require('../repositories/UsersRepository');
 
 class CreateUserService {
+  constructor() {
+    this.usersRepository = new UsersRepository();
+  }
+
   async execute({ name, email, password, type }) {
     if (type !== 'student' && type !== 'teacher') {
       throw new Error('Invalid user type');
     }
 
-    const checkUserExists = await User.findOne({
-      where: {
-        email,
-      },
-    });
+    const checkUserExists = await this.usersRepository.findByEmail(email);
 
     if (checkUserExists) {
       throw new Error('The email address has already used');
@@ -19,14 +19,12 @@ class CreateUserService {
 
     const hashedPassword = await hash(password, 8);
 
-    const user = User.build({
+    const user = await this.usersRepository.create({
       name,
       email,
       password: hashedPassword,
       type,
     });
-
-    await user.save();
 
     return user;
   }
