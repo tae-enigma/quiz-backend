@@ -27,6 +27,7 @@
       {
         "argsIgnorePattern": "_"
       }
-    ]
+    ],
+    "class-methods-use-this": "off"
   }
 }

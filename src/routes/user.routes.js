@@ -1,14 +1,14 @@
 const { Router } = require('express');
-const { User } = require('../models');
+const CreateUserService = require('../services/CreateUserService');
 
 const usersRouter = Router();
 
 usersRouter.post('/', async (request, response) => {
   const { name, email, password, type } = request.body;
 
-  const user = await User.create({ name, email, password, type });
+  const createUser = new CreateUserService();
 
-  console.log(user);
+  const user = await createUser.execute({ name, email, password, type });
 
   return response.json(user);
 });
