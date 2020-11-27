@@ -1,5 +1,3 @@
-const express = require('express');
+const app = require('./app');
 
-const app = express();
-
-app.listen(3333, () => console.log(`server its run`));
+app.listen(3333, () => console.log(`Server is running on port 3333`));

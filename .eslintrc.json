@@ -13,7 +13,7 @@
   },
   "parserOptions": {
     "ecmaVersion": 2018,
-    "sourceType": "module"
+    "sourceType": "script"
   },
   "plugins": [
     "prettier"
@@ -21,6 +21,12 @@
   "rules": {
     "prettier/prettier": "error",
     "import/no-dynamic-require": "off",
-    "global-require": "off"
+    "global-require": "off",
+    "no-unused-vars": [
+      "error",
+      {
+        "argsIgnorePattern": "_"
+      }
+    ]
   }
 }
