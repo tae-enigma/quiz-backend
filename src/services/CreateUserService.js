@@ -3,6 +3,10 @@ const { User } = require('../models');
 
 class CreateUserService {
   async execute({ name, email, password, type }) {
+    if (type !== 'student' && type !== 'teacher') {
+      throw new Error('Invalid user type');
+    }
+
     const checkUserExists = await User.findOne({
       where: {
         email,
