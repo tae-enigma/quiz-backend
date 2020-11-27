@@ -1,23 +1,23 @@
 module.exports = {
   development: {
-    username: 'root',
-    password: null,
+    username: process.env.USER_DB,
+    password: process.env.PASS_DB,
     database: 'tae_quiz',
-    host: '127.0.0.1',
+    host: process.env.HOST_DB,
     dialect: 'mysql',
   },
   test: {
-    username: 'root',
-    password: null,
+    username: process.env.USER_DB,
+    password: process.env.PASS_DB,
     database: 'tae_quiz_test',
-    host: '127.0.0.1',
+    host: process.env.HOST_DB,
     dialect: 'mysql',
   },
   production: {
-    username: 'root',
-    password: null,
+    username: process.env.USER_DB,
+    password: process.env.PASS_DB,
     database: 'tae_quiz_production',
-    host: '127.0.0.1',
+    host: process.env.HOST_DB,
     dialect: 'mysql',
   },
 };
