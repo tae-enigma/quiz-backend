@@ -6,5 +6,6 @@ const routes = Router();
 
 routes.use('/users', usersRouter);
 routes.use('/sessions', sessionsRouter);
+routes.use('/quiz')
 
 module.exports = routes;
