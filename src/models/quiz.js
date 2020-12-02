@@ -9,17 +9,22 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      this.belongsTo(models.user)
+      this.belongsTo(models.User, { foreignKey: 'teacher_id' });
     }
   };
   quiz.init({
+    id: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      primaryKey: true,
+    },
     name: DataTypes.STRING,
     time_limit: DataTypes.TIME,
-    question_qty_limit: DataTypes.NUMBER,
-    question_team_qty_limit: DataTypes.NUMBER,
+    question_qty_limit: DataTypes.INTEGER,
+    question_team_qty_limit: DataTypes.INTEGER,
   }, {
     sequelize,
-    modelName: 'quiz',
+    modelName: 'Quiz',
     tableName: 'quizzes',
   });
   return quiz;

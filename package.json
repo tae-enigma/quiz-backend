@@ -5,8 +5,8 @@
   "license": "MIT",
   "scripts": {
     "dev:server": "nodemon",
-    "migrate:run": " sequelize-cli db:migrate",
-    "migrate:revert": "USER_DB=mich PASS_DB=admin npx sequelize-cli db:migrate:undo"
+    "migrate:run": "sequelize-cli db:migrate",
+    "migrate:revert": "sequelize-cli db:migrate:undo"
   },
   "husky": {
     "hooks": {

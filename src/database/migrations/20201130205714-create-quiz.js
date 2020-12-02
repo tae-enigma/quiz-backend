@@ -1,4 +1,5 @@
 'use strict';
+
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('quizzes', {
@@ -21,7 +22,13 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       teacher_id: {
-        type: Sequelize.STRING
+        type: Sequelize.UUID,
+        references: {
+          model: 'users',
+          key: 'id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL'
       },
       createdAt: {
         allowNull: false,
