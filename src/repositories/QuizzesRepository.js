@@ -1,6 +1,4 @@
-const {Quiz} = require('../models')
-
-console.log(Quiz)
+const { Quiz } = require('../models')
 
 /**
  * @typedef { Object } QuizDTO
@@ -13,7 +11,7 @@ console.log(Quiz)
 
  /**
  * @typedef { Object } Quiz
- *  @property { string } id
+ * @property { string } id
  * @property { string } name
  * @property { date } time_limit
  * @property { number } question_qty_limit
@@ -23,6 +21,9 @@ console.log(Quiz)
  * @property { Date } updatedAt
  */
 
+ /**
+  * @class QuizzesRepository
+  */
 class QuizzesRepository {
 
   /**

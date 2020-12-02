@@ -21,11 +21,21 @@ const QuizzesRepository = require('../repositories/QuizzesRepository')
  * @property { Date } updatedAt
  */
 
+
+/**
+ * Instance a CreateQuizService
+ * @constructor
+ */
 class CreateQuizService {
   constructor() {
     this.quizzesRepository = new QuizzesRepository();
   }
 
+  /**
+   * 
+   * @param {Request} data
+   * @returns {Promise<Quiz>} 
+   */
   async execute({name, time_limit, question_qty_limit, question_team_qty_limit, teacher_id}){
     const quiz = await this.quizzesRepository.create({
       name,

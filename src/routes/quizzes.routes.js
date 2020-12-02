@@ -1,9 +1,13 @@
-const {Router, request, response} = require('express')
+const {Router} = require('express')
 const CreateQuizService = require('../services/CreateQuizService')
 
 const quizzesRouter = Router()
 
 quizzesRouter.post('/', async (request, response) => {
+  /**
+   * @todo
+   * middleware for id users from request
+   */
   const {name, time_limit, question_qty_limit, question_team_qty_limit, teacher_id} = request.body
 
   try {
