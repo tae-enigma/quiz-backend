@@ -1,8 +1,9 @@
 const { Question } = require('../models')
 
 /**
- * @typedef { Object } QuizDTO
-* @property { string } team
+ * @typedef { Object } QuestionDTO
+ * @property { text } description
+ * @property { string } team
  * @property { number } level
  * @property { boolean } is_selected
  * @property { string} student_id
@@ -10,9 +11,10 @@ const { Question } = require('../models')
  */
 
  /**
- * @typedef { Object } Quiz
+ * @typedef { Object } Question
  * @property { string } id
-* @property { string } team
+ * @property { text } description
+ * @property { string } team
  * @property { number } level
  * @property { boolean } is_selected
  * @property { string} student_id
@@ -31,13 +33,14 @@ class QuestionsRepository {
    * @param {QuestionDTO} quiz 
    * @returns {Promise<Question>}
    */
-  async create({team, level, is_selected, student_id, quiz_id}){
+  async create({description, team, level, is_selected, student_id, quiz_id}){
     const question = Question.build({
-        team,
-        level,
-        is_selected,
-        student_id,
-        quiz_id
+      description,  
+      team,
+      level,
+      is_selected,
+      student_id,
+      quiz_id
     });
 
     await question.save();

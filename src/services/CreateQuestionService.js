@@ -2,6 +2,7 @@ const QuestionsRepository = require('../repositories/QuestionsRepository')
 
 /**
  * @typedef { Object } Request
+ * @property { text } description
  * @property { string } team
  * @property { number } level
  * @property { boolean } is_selected
@@ -12,6 +13,7 @@ const QuestionsRepository = require('../repositories/QuestionsRepository')
  /**
  * @typedef { Object } Question
  *  @property { string } id
+ * @property { text } description
  * @property { string } team
  * @property { number } level
  * @property { boolean } is_selected
@@ -36,8 +38,9 @@ class CreateQuestionService {
    * @param {Request} data
    * @returns {Promise<Question>} 
    */
-  async execute({team, level, is_selected, student_id, quiz_id}){
+  async execute({ description, team, level, is_selected, student_id, quiz_id }){
     const question = await this.questionsRepository.create({
+      description,
       team,
       level,
       is_selected,
