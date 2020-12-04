@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
     },
-    description: DataTypes.TEXT,
+    description: DataTypes.STRING,
     team: DataTypes.STRING,
     level: DataTypes.INTEGER,
     is_selected: DataTypes.BOOLEAN,
