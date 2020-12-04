@@ -37,7 +37,7 @@ class CreateQuestionService {
    * @returns {Promise<Question>} 
    */
   async execute({team, level, is_selected, student_id, quiz_id}){
-    const quiz = await this.questionsRepository.create({
+    const question = await this.questionsRepository.create({
       team,
       level,
       is_selected,
