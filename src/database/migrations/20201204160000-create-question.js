@@ -33,10 +33,12 @@ module.exports = {
         type: Sequelize.STRING,
       },
       level: {
-        type : Sequelize.INTEGER
+        type : Sequelize.INTEGER,
+        defaultValue: 1
       },
       is_selected: {
-        type: Sequelize.BOOLEAN
+        type: Sequelize.BOOLEAN,
+        defaultValue: false,
       },
       createdAt: {
         allowNull: false,

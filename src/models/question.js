@@ -21,8 +21,14 @@ module.exports = (sequelize, DataTypes) => {
     },
     description: DataTypes.STRING,
     team: DataTypes.STRING,
-    level: DataTypes.INTEGER,
-    is_selected: DataTypes.BOOLEAN,
+    level: {
+      type: DataTypes.INTEGER,
+      defaultValue: 1
+    },
+    is_selected:{
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
+    }
   }, {
     sequelize,
     modelName: 'Question',

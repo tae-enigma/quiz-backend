@@ -1,27 +1,27 @@
+const { sequelize } = require('../models')
 const QuestionsRepository = require('../repositories/QuestionsRepository')
+const OptionsRepository = require('../repositories/OptionsRepository')
+const AnswersRepository = require('../repositories/AnswersRepository');
 
 /**
  * @typedef { Object } Request
  * @property { text } description
  * @property { string } team
- * @property { number } level
- * @property { boolean } is_selected
  * @property { string} student_id
  * @property { string } quiz_id
+ * @property { Array } options
  */
 
- /**
- * @typedef { Object } Question
- *  @property { string } id
- * @property { text } description
- * @property { string } team
- * @property { number } level
- * @property { boolean } is_selected
- * @property { string} student_id
- * @property { string } quiz_id
- * @property { Date } createdAt
- * @property { Date } updatedAt
- */
+/**
+* @typedef { Object } Question
+*  @property { string } id
+* @property { text } description
+* @property { string } team
+* @property { string} student_id
+* @property { string } quiz_id
+* @property { Date } createdAt
+* @property { Date } updatedAt
+*/
 
 
 /**
@@ -31,6 +31,8 @@ const QuestionsRepository = require('../repositories/QuestionsRepository')
 class CreateQuestionService {
   constructor() {
     this.questionsRepository = new QuestionsRepository();
+    this.optionsRepository = new OptionsRepository();
+    this.answersRepository = new AnswersRepository();
   }
 
   /**
@@ -38,16 +40,28 @@ class CreateQuestionService {
    * @param {Request} data
    * @returns {Promise<Question>} 
    */
-  async execute({ description, team, level, is_selected, student_id, quiz_id }){
-    const question = await this.questionsRepository.create({
-      description,
-      team,
-      level,
-      is_selected,
-      student_id,
-      quiz_id
+  async execute({ description, team, student_id, quiz_id, options }) {
+
+    const result = sequelize.transaction(async t => {
+
+      const question = await this.questionsRepository.create({
+        description,
+        team,
+        student_id,
+        quiz_id
+      }, t)
+
+      options.forEach(value => {
+        value.question_id = question.id
+      })
+
+      const result = await this.optionsRepository.create(options, t)
+
+      return { question, options: result }
     })
-    return question
+
+
+    return result
   }
 }
 

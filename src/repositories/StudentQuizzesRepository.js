@@ -21,7 +21,7 @@ const { StudentQuiz } = require('../models');
  */
 
  /**
-  * @constructor StudentQuizzesRepository
+  * @class StudentQuizzesRepository
   */
 class StudentQuizzesRepository {
 

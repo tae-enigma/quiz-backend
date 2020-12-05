@@ -34,26 +34,26 @@ class LinkStudentToQuiz {
    * @param {Request} data
    * @returns {Promise<StudentQuiz>} 
    */
-  async execute(quiz_id, emails, name_team){
+  async execute(quiz_id, emails, name_team) {
 
-    if(name_team !== 'Temidos' && name_team !== 'Iluminados'){
+    if (name_team !== 'Temidos' && name_team !== 'Iluminados') {
       throw new Error('Invalid name team')
     }
-    if(emails.length <= 0 || quiz_id === undefined){
-      throw new Error('Invalid filds')
+    if (emails.length <= 0 || quiz_id === undefined) {
+      throw new Error('Invalid fields')
     }
-    
+
     const promisseAll = []
     for (let index = 0; index < emails.length; index++) {
       const checkUserExists = await this.usersRepository.findByEmail(emails[index]);
-      
-      
-      if(checkUserExists){
-        const student_quiz = { student_id:checkUserExists.id, quiz_id, team:name_team }
+
+
+      if (checkUserExists) {
+        const student_quiz = { student_id: checkUserExists.id, quiz_id, team: name_team }
         promisseAll.push(student_quiz)
       }
     }
-    
+
     const student_quizzes = await Promise.all(promisseAll)
     console.log(student_quizzes)
     const studentQuiz = this.studentQuizzesRepository.create(student_quizzes)
