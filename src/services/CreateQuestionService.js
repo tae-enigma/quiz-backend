@@ -2,6 +2,7 @@ const { sequelize } = require('../models')
 const QuestionsRepository = require('../repositories/QuestionsRepository')
 const OptionsRepository = require('../repositories/OptionsRepository')
 const AnswersRepository = require('../repositories/AnswersRepository');
+const UsersRepository = require('../repositories/UsersRepository');
 
 /**
  * @typedef { Object } Request
@@ -33,6 +34,7 @@ class CreateQuestionService {
     this.questionsRepository = new QuestionsRepository();
     this.optionsRepository = new OptionsRepository();
     this.answersRepository = new AnswersRepository();
+    this.usersRepository = new UsersRepository();
   }
 
   /**
@@ -41,6 +43,12 @@ class CreateQuestionService {
    * @returns {Promise<Question>} 
    */
   async execute({ description, team, student_id, quiz_id, options }) {
+
+    const user = await this.usersRepository.findById(student_id);
+
+    if(user.type !== "student") {
+      throw new Error('Only students can create questions');
+    }
 
     const result = sequelize.transaction(async t => {
 

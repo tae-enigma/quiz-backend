@@ -55,6 +55,21 @@ class UsersRepository {
 
     return user;
   }
+
+  /**
+   *
+   * @param { string } id
+   * @return { Promise<User> }
+   */
+  async findById(id) {
+    const user = await User.findOne({
+      where: {
+        id,
+      },
+    });
+
+    return user;
+  }
 }
 
 module.exports = UsersRepository;
