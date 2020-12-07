@@ -48,7 +48,7 @@ class LinkStudentToQuiz {
       const checkUserExists = await this.usersRepository.findByEmail(emails[index]);
 
 
-      if (checkUserExists) {
+      if (checkUserExists && checkUserExists.type === "student") {
         const student_quiz = { student_id: checkUserExists.id, quiz_id, team: name_team }
         promisseAll.push(student_quiz)
       }
