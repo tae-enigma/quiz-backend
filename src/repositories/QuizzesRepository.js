@@ -46,4 +46,4 @@ class QuizzesRepository {
   }
 }
 
-module.exports = QuizzesRepository
+module.exports = QuizzesRepository;

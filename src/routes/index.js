@@ -4,6 +4,7 @@ const sessionsRouter = require('./sessions.routes');
 const quizzesRouter = require('../routes/quizzes.routes');
 const studentQuizzesRouter = require('./studentQuizzes.routes');
 const questionsRouter = require('./questions.routes');
+const questionsQuizzesRouter = require('./questionsQuizzes.routes')
 
 const routes = Router();
 
@@ -16,5 +17,6 @@ routes.use('/sessions', sessionsRouter);
 routes.use('/quizzes', quizzesRouter);
 routes.use('/quizzes/students', studentQuizzesRouter);
 routes.use('/questions', questionsRouter);
+routes.use('/quizzes/questions',questionsQuizzesRouter);
 
 module.exports = routes;

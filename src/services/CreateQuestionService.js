@@ -1,7 +1,6 @@
 const { sequelize } = require('../models')
 const QuestionsRepository = require('../repositories/QuestionsRepository')
 const OptionsRepository = require('../repositories/OptionsRepository')
-const AnswersRepository = require('../repositories/AnswersRepository');
 const UsersRepository = require('../repositories/UsersRepository');
 
 /**
@@ -33,7 +32,6 @@ class CreateQuestionService {
   constructor() {
     this.questionsRepository = new QuestionsRepository();
     this.optionsRepository = new OptionsRepository();
-    this.answersRepository = new AnswersRepository();
     this.usersRepository = new UsersRepository();
   }
 
@@ -42,7 +40,7 @@ class CreateQuestionService {
    * @param {Request} data
    * @returns {Promise<Question>} 
    */
-  async execute({ description, team, student_id, quiz_id, options }) {
+  async execute({ description, team, student_id, options }) {
 
     const user = await this.usersRepository.findById(student_id);
 
@@ -56,7 +54,6 @@ class CreateQuestionService {
         description,
         team,
         student_id,
-        quiz_id
       }, t)
 
       options.forEach(value => {

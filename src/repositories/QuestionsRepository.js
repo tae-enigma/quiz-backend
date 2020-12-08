@@ -33,7 +33,7 @@ class QuestionsRepository {
    * @param {QuestionDTO} quiz 
    * @returns {Promise<Question>}
    */
-  async create({description, team, level, is_selected, student_id, quiz_id}, t){
+  async create({description, team, student_id, level, is_selected, quiz_id}, t){
     const question = await Question.create({
       description,  
       team,
@@ -46,6 +46,25 @@ class QuestionsRepository {
 
     return question
   }
+
+  /**
+   * 
+   * @param {QuestionDTO} data
+   * @returns {Promise<number>}
+   */
+  async linkToQuiz({id, quiz_id}){
+    
+    const [result] = await Question.update({quiz_id:quiz_id},{
+      where: {
+        id
+      }
+    })
+    
+    return result
+
+  }
+
+
 }
 
 module.exports = QuestionsRepository

@@ -1,5 +1,4 @@
-const student_quiz = require('../models/student_quiz');
-const StudentQuizzesRepository = require('../repositories/StudentQuizzesRepository')
+const StudentQuizzesRepository = require('../repositories/StudentQuizzesRepository');
 const UsersRepository = require('../repositories/UsersRepository');
 
 /**
@@ -30,23 +29,22 @@ class LinkStudentToQuiz {
   }
 
   /**
-   * 
    * @param {Request} data
-   * @returns {Promise<StudentQuiz>} 
+   * @returns {Promise<StudentQuiz>}
    */
   async execute(quiz_id, emails, name_team) {
-
     if (name_team !== 'Temidos' && name_team !== 'Iluminados') {
-      throw new Error('Invalid name team')
+      throw new Error('Invalid name team');
     }
     if (emails.length <= 0 || quiz_id === undefined) {
-      throw new Error('Invalid fields')
+      throw new Error('Invalid fields');
     }
 
-    const promisseAll = []
+    const promisseAll = [];
     for (let index = 0; index < emails.length; index++) {
-      const checkUserExists = await this.usersRepository.findByEmail(emails[index]);
-
+      const checkUserExists = await this.usersRepository.findByEmail(
+        emails[index],
+      );
 
       if (checkUserExists && checkUserExists.type === "student") {
         const student_quiz = { student_id: checkUserExists.id, quiz_id, team: name_team }
@@ -54,11 +52,11 @@ class LinkStudentToQuiz {
       }
     }
 
-    const student_quizzes = await Promise.all(promisseAll)
-    console.log(student_quizzes)
-    const studentQuiz = this.studentQuizzesRepository.create(student_quizzes)
-    return studentQuiz
+    const student_quizzes = await Promise.all(promisseAll);
+
+    const studentQuiz = this.studentQuizzesRepository.create(student_quizzes);
+    return studentQuiz;
   }
 }
 
-module.exports = LinkStudentToQuiz
+module.exports = LinkStudentToQuiz;
