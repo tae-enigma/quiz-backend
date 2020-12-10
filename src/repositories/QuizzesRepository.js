@@ -1,3 +1,4 @@
+const { request } = require('express');
 const { Quiz } = require('../models')
 
 /**
@@ -43,6 +44,17 @@ class QuizzesRepository {
     await quiz.save();
 
     return quiz
+  }
+
+  async findAllByTeacherId(teacher_id){
+    const quizzes = await Quiz.findAll({
+      where:{
+        teacher_id
+      }
+    })
+
+    return quizzes
+
   }
 }
 
