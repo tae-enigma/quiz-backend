@@ -6,6 +6,8 @@ const studentQuizzesRouter = require('./studentQuizzes.routes');
 const questionsRouter = require('./questions.routes');
 const questionsQuizzesRouter = require('./questionsQuizzes.routes')
 
+const ensureAuthenticated = require('../middlewares/ensureAuthenticated')
+
 const routes = Router();
 
 // routes.use('/', (request, response) => {
@@ -16,7 +18,7 @@ routes.use('/users', usersRouter);
 routes.use('/sessions', sessionsRouter);
 routes.use('/quizzes', quizzesRouter);
 routes.use('/quizzes/students', studentQuizzesRouter);
-routes.use('/questions', questionsRouter);
+routes.use('/questions',ensureAuthenticated, questionsRouter);
 routes.use('/quizzes/questions',questionsQuizzesRouter);
 
 module.exports = routes;

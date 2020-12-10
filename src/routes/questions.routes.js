@@ -4,7 +4,8 @@ const CreateQuestionService = require('../services/CreateQuestionService')
 const questionsRouter = Router()
 
 questionsRouter.post('/', async (request, response) => {
-  const { description, team, student_id, quiz_id, options } = request.body
+  const { description, team, quiz_id, options } = request.body
+  const student_id = request.user.id
 
   try {
     const createQuestion = new CreateQuestionService();

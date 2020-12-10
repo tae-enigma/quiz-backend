@@ -1,14 +1,7 @@
 const {verify} = require("jsonwebtoken")
 const authConfig = require('../config/auth');
-import { Request, Response, NextFunction } from 'express';
-import { verify } from 'jsonwebtoken';
 
-import authConfig from '@config/auth';
-import AppError from '@shared/errors/AppError';
-
-
-
-export default function ensureAuthenticated(
+module.exports =  function ensureAuthenticated(
   request,
   response,
   next,
