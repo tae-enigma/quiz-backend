@@ -33,7 +33,7 @@ class QuestionsRepository {
    * @param {QuestionDTO} quiz 
    * @returns {Promise<Question>}
    */
-  async create({description, team, student_id, level, is_selected, quiz_id}, t){
+  async create({description, team, student_id,quiz_id, level, is_selected, }, t){
     const question = await Question.create({
       description,  
       team,

@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       this.belongsTo(models.User, {foreignKey: 'student_id'})
-      this.hasOne(models.Option, {foreignKey: 'option_id'})
+      this.belongsTo(models.Option, {foreignKey: 'option_id'})
 
     }
   };

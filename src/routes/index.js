@@ -18,7 +18,7 @@ routes.use('/users', usersRouter);
 routes.use('/sessions', sessionsRouter);
 routes.use('/quizzes', ensureAuthenticated, quizzesRouter);
 routes.use('/quizzes/students', studentQuizzesRouter);
-routes.use('/questions',ensureAuthenticated, questionsRouter);
+routes.use('/questions', ensureAuthenticated, questionsRouter);
 routes.use('/quizzes/questions',questionsQuizzesRouter);
 
 module.exports = routes;

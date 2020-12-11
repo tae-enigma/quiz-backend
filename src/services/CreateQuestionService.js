@@ -40,9 +40,13 @@ class CreateQuestionService {
    * @param {Request} data
    * @returns {Promise<Question>} 
    */
-  async execute({ description, team, student_id, options }) {
+  async execute({ description, team, student_id, quiz_id, options }) {
 
     const user = await this.usersRepository.findById(student_id);
+
+    if(!user){
+      throw new Error('Student not found');
+    }
 
     if(user.type !== "student") {
       throw new Error('Only students can create questions');
@@ -54,6 +58,7 @@ class CreateQuestionService {
         description,
         team,
         student_id,
+        quiz_id
       }, t)
 
       options.forEach(value => {

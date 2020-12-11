@@ -12,7 +12,7 @@ linkQuestionRouter.post('/:id', async (request, response) => {
 
     const questionQuizResult = await linkQuestionToQuizService.execute({ id, quiz_id })
 
-    response.json({ success: questionQuizResult })
+    response.status(204)
 
   } catch (error) {
     return response.status(400).json({ error: error.message })

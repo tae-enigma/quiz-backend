@@ -1,6 +1,8 @@
 const {Router, request} = require('express')
 const CreateQuizService = require('../services/CreateQuizService')
-const ShowQuizzesFromTeacher = require('../services/ShowQuizzesFromTeacher ')
+const ShowQuizzesFromTeacher = require('../services/ShowQuizzesFromTeacherService')
+const ShowQuizService = require('../services/ShowQuizService')
+
 
 const quizzesRouter = Router()
 
@@ -30,6 +32,22 @@ quizzesRouter.get('/', async (request, response) => {
     const quizzes = await showQuizzes.execute(teacher_id)
 
     return response.json(quizzes)
+  } catch (error) {
+    return response.status(400).json({ error: error.message });
+  }
+})
+
+
+quizzesRouter.get('/:quiz_id', async (request, response) => {
+  const {quiz_id} = request.params 
+
+  try {
+    const showQuiz = new ShowQuizService()
+
+    const quiz = await showQuiz.execute(quiz_id)
+
+    return response.json(quiz);
+
   } catch (error) {
     return response.status(400).json({ error: error.message });
   }
