@@ -1,4 +1,5 @@
-const { User } = require('../models');
+const { Op } = require('sequelize');
+const models = require('../models');
 
 /**
  * @typedef { Object } UserDTO
@@ -29,7 +30,7 @@ class UsersRepository {
    * @returns { Promise<User> }
    */
   async create({ name, email, password, type }) {
-    const user = User.build({
+    const user = models.User.build({
       name,
       email,
       password,
@@ -47,7 +48,7 @@ class UsersRepository {
    * @return { Promise<User> }
    */
   async findByEmail(email) {
-    const user = await User.findOne({
+    const user = await models.User.findOne({
       where: {
         email,
       },
@@ -58,11 +59,41 @@ class UsersRepository {
 
   /**
    *
+   * @param { Array<string> } emails
+   * @return { Promise<User[]> }
+   */
+  async findAllByEmails(emails) {
+    const users = await models.User.findAll({
+      where: {
+        email: {
+          [Op.in]: emails,
+        },
+      },
+    });
+
+    return users;
+  }
+
+  async findAllStudentsByEmails(emails) {
+    const users = await models.User.findAll({
+      where: {
+        email: {
+          [Op.in]: emails,
+        },
+        type: 'student',
+      },
+    });
+
+    return users;
+  }
+
+  /**
+   *
    * @param { string } id
    * @return { Promise<User> }
    */
   async findById(id) {
-    const user = await User.findOne({
+    const user = await models.User.findOne({
       where: {
         id,
       },

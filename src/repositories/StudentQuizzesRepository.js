@@ -6,9 +6,9 @@ const { StudentQuiz } = require('../models');
  * @property { string } quiz_id
  * @property { number } points
  * @property { string } team
- * 
+ *
  */
- 
+
 /**
  * @typedef { Object } StudentQuiz
  * @property { string } id
@@ -20,21 +20,20 @@ const { StudentQuiz } = require('../models');
  * @property { Date } updatedAt
  */
 
- /**
-  * @class StudentQuizzesRepository
-  */
+/**
+ * @class StudentQuizzesRepository
+ */
 class StudentQuizzesRepository {
-
   /**
-   * 
+   *
    * @param {Array<StudentQuizDTO>} studentQuiz
    * @returns {Promise<Array<StudentQuiz>>}
    */
-  async create(student_quizzes){
-    const students = await StudentQuiz.bulkCreate(student_quizzes)
+  async createMany(student_quizzes) {
+    const students = await StudentQuiz.bulkCreate(student_quizzes);
 
-    return students
+    return students;
   }
 }
 
-module.exports = StudentQuizzesRepository
+module.exports = StudentQuizzesRepository;
