@@ -22,6 +22,7 @@
     "prettier/prettier": "error",
     "import/no-dynamic-require": "off",
     "global-require": "off",
+    "camelcase": "off",
     "no-unused-vars": [
       "error",
       {

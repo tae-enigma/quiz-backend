@@ -32,9 +32,9 @@ class LinkStudentToQuiz {
    * @param {Request} data
    * @returns {Promise<StudentQuiz>}
    */
-  async execute(quiz_id, emails, name_team) {
-    if (name_team !== 'Temidos' && name_team !== 'Iluminados') {
-      throw new Error('Invalid name team');
+  async execute(quiz_id, emails, team) {
+    if (team !== 'dire' && team !== 'radiant') {
+      throw new Error('Invalid team name');
     }
     if (emails.length <= 0 || quiz_id === undefined) {
       throw new Error('Invalid fields');
@@ -46,9 +46,13 @@ class LinkStudentToQuiz {
         emails[index],
       );
 
-      if (checkUserExists && checkUserExists.type === "student") {
-        const student_quiz = { student_id: checkUserExists.id, quiz_id, team: name_team }
-        promisseAll.push(student_quiz)
+      if (checkUserExists && checkUserExists.type === 'student') {
+        const student_quiz = {
+          student_id: checkUserExists.id,
+          quiz_id,
+          team,
+        };
+        promisseAll.push(student_quiz);
       }
     }
 
