@@ -1,10 +1,16 @@
 const { Router } = require('express');
+
+const questionsRouter = require('./questions.routes');
+const ensureAuthenticated = require('../middlewares/ensureAuthenticated');
+
 const CreateQuizService = require('../services/CreateQuizService');
 const AddStudentsToQuizService = require('../services/AddStudentsToQuizService');
 const ListUserQuizzesService = require('../services/ListUserQuizzesService');
 const ShowFullQuizInformationService = require('../services/ShowFullQuizInformationService');
 
 const quizzesRouter = Router();
+
+quizzesRouter.use(ensureAuthenticated);
 
 quizzesRouter.post('/', async (request, response) => {
   const {
@@ -79,5 +85,7 @@ quizzesRouter.post('/:quiz_id/students', async (request, response) => {
     return response.status(400).json({ error: error.message });
   }
 });
+
+quizzesRouter.use('/', questionsRouter);
 
 module.exports = quizzesRouter;
