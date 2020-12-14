@@ -6,6 +6,9 @@ class ShowQuizService {
       where: { id: quiz_id },
       include: [
         {
+          model: model.User,
+        },
+        {
           model: model.Question,
           include: [
             {
@@ -27,7 +30,7 @@ class ShowQuizService {
       ],
     });
 
-    const { StudentQuizzes, Questions, ...quiz } = quizInfo[0].get({
+    const { StudentQuizzes, Questions, User, ...quiz } = quizInfo[0].get({
       plain: true,
     });
 
@@ -52,7 +55,10 @@ class ShowQuizService {
     });
 
     return {
-      quiz,
+      quiz: {
+        ...quiz,
+        teacher_name: User.name,
+      },
       students,
       questions,
     };
