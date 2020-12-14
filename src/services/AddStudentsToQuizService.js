@@ -24,7 +24,7 @@ class AddStudentsToQuizService {
       const student = current.get({ plain: true });
 
       const isStudentInQuiz = quiz_students.find(
-        quiz_student => quiz_student.User.id === student.id,
+        quiz_student => quiz_student.id === student.id,
       );
 
       if (isStudentInQuiz) return acc;

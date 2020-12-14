@@ -25,7 +25,7 @@ class ListQuizQuestionsService {
 
       questions = await this.questionsRepository.findAllByQuizIdAndStudentTeam({
         quiz_id,
-        team: student.StudentQuizzes[0].team,
+        team: student.quizzes[0].team,
       });
     } else {
       questions = await this.questionsRepository.findAllByQuizId(quiz_id);

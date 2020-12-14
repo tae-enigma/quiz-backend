@@ -57,7 +57,7 @@ class CreateQuestionService {
       const question = await this.questionsRepository.create(
         {
           description,
-          team: user.StudentQuizzes[0].team,
+          team: user.quizzes[0].team,
           student_id,
           quiz_id,
         },

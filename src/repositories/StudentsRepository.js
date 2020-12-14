@@ -43,6 +43,7 @@ class StudentsRepository {
       },
       include: {
         model: models.StudentQuiz,
+        as: 'quizzes',
         where: {
           quiz_id,
         },
@@ -68,11 +69,17 @@ class StudentsRepository {
   }
 
   async findAllStudentsByQuizId(quiz_id) {
-    const students = await models.StudentQuiz.findAll({
-      where: {
-        quiz_id,
+    const students = await models.User.findAll({
+      attributes: {
+        exclude: ['password'],
       },
-      include: models.User,
+      include: {
+        model: models.StudentQuiz,
+        as: 'quizzes',
+        where: {
+          quiz_id,
+        },
+      },
     });
 
     return students;
