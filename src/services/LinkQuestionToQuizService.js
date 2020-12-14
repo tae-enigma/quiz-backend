@@ -1,11 +1,10 @@
-const QuestionsRepository = require('../repositories/QuestionsRepository')
+const QuestionsRepository = require('../repositories/QuestionsRepository');
 
 /**
  * @typedef { Object } Request
- * @property { string } id
- * @property { string } quiz_id
+ * @property { string } question_id
+ * @property { 1 | 2 } level
  */
-
 
 /**
  * @constructor
@@ -16,14 +15,19 @@ class LinkQuestionToQuizService {
   }
 
   /**
-   * 
+   *
    * @param {Request} data
-   * @returns {Promise<number>} 
+   * @returns {Promise<number>}
    */
-  async execute({id, quiz_id}){
-    const result = await this.questionsRepository.linkToQuiz({id, quiz_id})
-    
-    return result
+  async execute({ question_id, level }) {
+    const question = await this.questionsRepository.findById(question_id);
+
+    question.is_selected = true;
+    question.level = level;
+
+    await this.questionsRepository.save(question);
+
+    return question;
   }
 }
 

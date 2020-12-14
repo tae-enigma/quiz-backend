@@ -53,15 +53,46 @@ class QuestionsRepository {
 
   /**
    *
+   * @param {string} id
+   * @return { Promise<QuestionDTO> }
+   */
+
+  async findById(id) {
+    const question = await models.Question.findOne({
+      where: {
+        id,
+      },
+      include: {
+        model: models.Option,
+        as: 'options',
+      },
+    });
+
+    return question;
+  }
+
+  /**
+   *
+   * @param {QuestionDTO} question
+   * @returns {Promise<QuestionDTO>}
+   */
+  async save(question) {
+    const savedQuestion = await question.save;
+
+    return savedQuestion;
+  }
+
+  /**
+   *
    * @param {QuestionDTO} data
    * @returns {Promise<number>}
    */
-  async linkToQuiz({ id, quiz_id }) {
+  async linkToQuiz({ question_id, quiz_id }) {
     const [result] = await models.Question.update(
       { quiz_id },
       {
         where: {
-          id,
+          id: question_id,
         },
       },
     );

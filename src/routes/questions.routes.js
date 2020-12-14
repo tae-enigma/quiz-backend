@@ -2,6 +2,7 @@ const { Router } = require('express');
 
 const ListQuizQuestionsService = require('../services/ListQuizQuestionsService');
 const CreateQuestionService = require('../services/CreateQuestionService');
+const LinkQuestionToQuizService = require('../services/LinkQuestionToQuizService');
 
 const questionsRouter = Router();
 
@@ -36,6 +37,24 @@ questionsRouter.post('/:quiz_id/questions', async (request, response) => {
       student_id,
       quiz_id,
       options,
+    });
+
+    return response.json(question);
+  } catch (error) {
+    return response.status(400).json({ error: error.message });
+  }
+});
+
+questionsRouter.patch('/:quiz_id/questions', async (request, response) => {
+  const { question_id, level } = request.body;
+  const { quiz_id } = request.params;
+
+  try {
+    const linkQuestionToQuizService = new LinkQuestionToQuizService();
+
+    const question = await linkQuestionToQuizService.execute({
+      question_id,
+      level,
     });
 
     return response.json(question);
