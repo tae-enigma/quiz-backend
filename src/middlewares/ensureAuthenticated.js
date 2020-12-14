@@ -22,8 +22,11 @@ module.exports = function ensureAuthenticated(request, response, next) {
 
     const { sub } = decoded;
 
+    const user = JSON.parse(sub);
+
     request.user = {
-      id: sub,
+      id: user.id,
+      token: user.token,
     };
 
     return next();
