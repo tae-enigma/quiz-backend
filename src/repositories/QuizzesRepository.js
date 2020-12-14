@@ -1,4 +1,4 @@
-const { Quiz } = require('../models');
+const models = require('../models');
 
 /**
  * @typedef { Object } QuizDTO
@@ -37,7 +37,7 @@ class QuizzesRepository {
     question_team_qty_limit,
     teacher_id,
   }) {
-    const quiz = Quiz.build({
+    const quiz = models.Quiz.build({
       name,
       time_limit,
       question_qty_limit,
@@ -51,10 +51,29 @@ class QuizzesRepository {
   }
 
   async findAllByTeacherId(teacher_id) {
-    const quizzes = await Quiz.findAll({
+    const quizzes = await models.Quiz.findAll({
       where: {
         teacher_id,
       },
+      include: models.User,
+    });
+
+    return quizzes;
+  }
+
+  async findAllByStudentId(student_id) {
+    const quizzes = await models.Quiz.findAll({
+      include: [
+        {
+          model: models.StudentQuiz,
+          where: {
+            student_id,
+          },
+        },
+        {
+          model: models.User,
+        },
+      ],
     });
 
     return quizzes;
