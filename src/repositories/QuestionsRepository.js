@@ -77,7 +77,7 @@ class QuestionsRepository {
    * @returns {Promise<QuestionDTO>}
    */
   async save(question) {
-    const savedQuestion = await question.save;
+    const savedQuestion = await question.save();
 
     return savedQuestion;
   }
