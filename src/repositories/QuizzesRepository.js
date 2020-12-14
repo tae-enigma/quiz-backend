@@ -50,9 +50,9 @@ class QuizzesRepository {
     return quiz;
   }
 
-  async findById(id){
-    const quiz = await models.Quiz.findByPk(id)
-    return quiz
+  async findById(id) {
+    const quiz = await models.Quiz.findByPk(id);
+    return quiz;
   }
 
   async findAllByTeacherId(teacher_id) {
@@ -84,14 +84,17 @@ class QuizzesRepository {
     return quizzes;
   }
 
-  async updateStartQuiz({quiz_id, date_time}){
-    const [result] = await models.Quiz.update({start:date_time},{
-      where:{
-        id:quiz_id
-      }
-    })
+  async updateStartQuiz({ quiz_id, date_time }) {
+    const [result] = await models.Quiz.update(
+      { start: date_time },
+      {
+        where: {
+          id: quiz_id,
+        },
+      },
+    );
 
-    return result
+    return result;
   }
 }
 

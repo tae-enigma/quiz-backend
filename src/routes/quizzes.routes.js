@@ -6,8 +6,9 @@ const ensureAuthenticated = require('../middlewares/ensureAuthenticated');
 const CreateQuizService = require('../services/CreateQuizService');
 const AddStudentsToQuizService = require('../services/AddStudentsToQuizService');
 const ListUserQuizzesService = require('../services/ListUserQuizzesService');
-const ShowFullQuizInformationService = require('../services/ShowFullQuizInformationService');
-const StartQuizService = require('../services/StartQuizService')
+const ShowQuizInformationsService = require('../services/ShowQuizInformationsService');
+const ShowAllStudentsFromQuizService = require('../services/ShowAllStudentsFromQuizService');
+const StartQuizService = require('../services/StartQuizService');
 
 const quizzesRouter = Router();
 
@@ -58,11 +59,32 @@ quizzesRouter.get('/:quiz_id', async (request, response) => {
   const user_id = request.user.id;
 
   try {
-    const showFullQuizInformation = new ShowFullQuizInformationService();
+    const showQuizInformationsService = new ShowQuizInformationsService();
 
-    const quiz = await showFullQuizInformation.execute({ quiz_id, user_id });
+    const quiz = await showQuizInformationsService.execute({
+      quiz_id,
+      user_id,
+    });
 
     return response.json(quiz);
+  } catch (error) {
+    return response.status(400).json({ error: error.message });
+  }
+});
+
+quizzesRouter.get('/:quiz_id/students', async (request, response) => {
+  const { quiz_id } = request.params;
+  const user_id = request.user.id;
+
+  try {
+    const showAllStudentsFromQuiz = new ShowAllStudentsFromQuizService();
+
+    const students = await showAllStudentsFromQuiz.execute({
+      quiz_id,
+      user_id,
+    });
+
+    return response.json(students);
   } catch (error) {
     return response.status(400).json({ error: error.message });
   }
@@ -87,17 +109,17 @@ quizzesRouter.post('/:quiz_id/students', async (request, response) => {
   }
 });
 
-quizzesRouter.patch('/:quiz_id/start', async (request, response) =>{
-  const {quiz_id} = request.params
+quizzesRouter.patch('/:quiz_id/start', async (request, response) => {
+  const { quiz_id } = request.params;
   try {
-    const startQuizService = new StartQuizService()
-    const result  = await startQuizService.execute(quiz_id)
+    const startQuizService = new StartQuizService();
+    const result = await startQuizService.execute(quiz_id);
 
-    return response.json(result)
+    return response.json(result);
   } catch (error) {
     return response.status(400).json({ error: error.message });
   }
-})
+});
 quizzesRouter.use('/', questionsRouter);
 
 module.exports = quizzesRouter;
