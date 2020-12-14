@@ -13,7 +13,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       time_limit: {
-        type: Sequelize.TIME
+        type: Sequelize.BIGINT
       },
       question_qty_limit: {
         type: Sequelize.INTEGER

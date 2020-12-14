@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
     },
     name: DataTypes.STRING,
-    time_limit: DataTypes.TIME,
+    time_limit: DataTypes.BIGINT,
     question_qty_limit: DataTypes.INTEGER,
     question_team_qty_limit: DataTypes.INTEGER,
     start: DataTypes.DATE

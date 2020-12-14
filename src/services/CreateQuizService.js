@@ -1,4 +1,5 @@
 const QuizzesRepository = require('../repositories/QuizzesRepository')
+const formatTime = require('../utils/formatTime')
 
 /**
  * @typedef { Object } Request
@@ -32,14 +33,17 @@ class CreateQuizService {
   }
 
   /**
-   * 
+   *
    * @param {Request} data
-   * @returns {Promise<Quiz>} 
+   * @returns {Promise<Quiz>}
    */
   async execute({name, time_limit, question_qty_limit, question_team_qty_limit, teacher_id}){
+
+    const milliseconds = formatTime.timeStringToMillisecods(time_limit)
+
     const quiz = await this.quizzesRepository.create({
       name,
-      time_limit,
+      time_limit:milliseconds,
       question_qty_limit,
       question_team_qty_limit,
       teacher_id
