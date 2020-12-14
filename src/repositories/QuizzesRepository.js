@@ -13,7 +13,8 @@ const models = require('../models');
  * @typedef { Object } Quiz
  * @property { string } id
  * @property { string } name
- * @property { date } time_limit
+ * @property { number } time_limit
+ * @property { Date } start
  * @property { number } question_qty_limit
  * @property { number } question_team_qty_limit
  * @property { string } teacher_id
@@ -50,8 +51,22 @@ class QuizzesRepository {
     return quiz;
   }
 
+  /**
+   *
+   * @param {string} id
+   * @return { Promise<Quiz> }
+   */
   async findById(id) {
-    const quiz = await models.Quiz.findByPk(id);
+    const quiz = await models.Quiz.findOne({
+      where: { id },
+      include: {
+        model: models.User,
+        as: 'teacher',
+        attributes: {
+          exclude: ['password'],
+        },
+      },
+    });
     return quiz;
   }
 
@@ -60,7 +75,13 @@ class QuizzesRepository {
       where: {
         teacher_id,
       },
-      include: models.User,
+      include: {
+        model: models.User,
+        as: 'teacher',
+        attributes: {
+          exclude: ['password'],
+        },
+      },
     });
 
     return quizzes;
@@ -77,6 +98,10 @@ class QuizzesRepository {
         },
         {
           model: models.User,
+          as: 'teacher',
+          attributes: {
+            exclude: ['password'],
+          },
         },
       ],
     });

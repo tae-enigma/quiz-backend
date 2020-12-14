@@ -4,30 +4,33 @@ module.exports = {
    * @param {String} timeString
    * @returns {Number}
    */
-  timeStringToMillisecods: (timeString) => {
-    const [hours, minutes, seconds] = timeString.split(':').map(value => parseInt(value))
+  timeStringToMillisecods: timeString => {
+    const timeArray = timeString.split(':');
 
-    var milliseconds = 0
+    const [hours, minutes, seconds] = timeArray.map(value => Number(value));
 
-    milliseconds += hours * 60 * 60 * 1000
-    milliseconds += minutes * 60 * 1000
-    milliseconds += seconds * 1000
+    let milliseconds = 0;
 
-    return milliseconds
+    milliseconds += hours * 60 * 60 * 1000;
+    milliseconds += minutes * 60 * 1000;
+    milliseconds += (seconds || 0) * 1000;
+
+    return milliseconds;
   },
   /**
    *
    * @param {Number} milliseconds
    * @returns {String}
    */
-  millisecondsToTimeString: (milliseconds) => {
+  millisecondsToTimeString: milliseconds => {
     // let millis = milliseconds % 1000;
-    let second = parseInt((milliseconds / 1000) % 60);
-    let minute = parseInt((milliseconds / (1000 * 60)) % 60);
-    let hour = parseInt( (milliseconds / (1000 * 60 * 60)) % 24);
+    const second = Number((milliseconds / 1000) % 60);
+    const minute = Number((milliseconds / (1000 * 60)) % 60);
+    const hour = Number((milliseconds / (1000 * 60 * 60)) % 24);
 
-    console.log(hour)
-
-    return `${String(hour).padStart(2,'0')}:${String(minute).padStart(2, '0')}:${String(second).padStart(2, '0')}`
-  }
-}
+    return `${String(hour).padStart(2, '0')}:${String(minute).padStart(
+      2,
+      '0',
+    )}:${String(second).padStart(2, '0')}`;
+  },
+};
