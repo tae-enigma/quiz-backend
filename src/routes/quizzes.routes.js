@@ -3,6 +3,7 @@ const CreateQuizService = require('../services/CreateQuizService');
 const AddStudentsToQuizService = require('../services/AddStudentsToQuizService');
 const ListUserQuizzesService = require('../services/ListUserQuizzesService');
 const ShowFullQuizInformationService = require('../services/ShowFullQuizInformationService');
+const StartQuizService = require('../services/StartQuizService')
 
 const quizzesRouter = Router();
 
@@ -79,5 +80,17 @@ quizzesRouter.post('/:quiz_id/students', async (request, response) => {
     return response.status(400).json({ error: error.message });
   }
 });
+
+quizzesRouter.patch('/:quiz_id/start', async (request, response) =>{
+  const {quiz_id} = request.params
+  try {
+    const startQuizService = new StartQuizService()
+    const result  = await startQuizService.execute(quiz_id)
+
+    return response.json(result)
+  } catch (error) {
+    return response.status(400).json({ error: error.message });
+  }
+})
 
 module.exports = quizzesRouter;

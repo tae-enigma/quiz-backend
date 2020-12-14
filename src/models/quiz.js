@@ -24,6 +24,7 @@ module.exports = (sequelize, DataTypes) => {
     time_limit: DataTypes.TIME,
     question_qty_limit: DataTypes.INTEGER,
     question_team_qty_limit: DataTypes.INTEGER,
+    start: DataTypes.DATE
   }, {
     sequelize,
     modelName: 'Quiz',
