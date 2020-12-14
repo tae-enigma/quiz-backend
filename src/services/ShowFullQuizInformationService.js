@@ -1,7 +1,30 @@
 const model = require('../models');
+const StudentsRepository = require('../repositories/StudentsRepository');
+const UsersRepository = require('../repositories/UsersRepository');
 
-class ShowQuizService {
-  async execute(quiz_id) {
+class ShowFullQuizInformationService {
+  constructor() {
+    this.usersRepository = new UsersRepository();
+    this.studentsRepository = new StudentsRepository();
+  }
+
+  async execute({ quiz_id, user_id }) {
+    const user = await this.usersRepository.findById(user_id);
+
+    let where = {};
+
+    if (!user) {
+      throw new Error('User does not exists');
+    }
+
+    if (user.type === 'student') {
+      const student = await this.studentsRepository.findStudentByUserIdAndQuizId(
+        { user_id, quiz_id },
+      );
+
+      where = { team: student.StudentQuizzes[0].team };
+    }
+
     const quizInfo = await model.Quiz.findAll({
       where: { id: quiz_id },
       include: [
@@ -10,6 +33,7 @@ class ShowQuizService {
         },
         {
           model: model.Question,
+          where,
           include: [
             {
               model: model.Option,
@@ -68,4 +92,4 @@ class ShowQuizService {
 /**
  *
  */
-module.exports = ShowQuizService;
+module.exports = ShowFullQuizInformationService;
