@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const CreateQuizService = require('../services/CreateQuizService');
 const AddStudentsToQuizService = require('../services/AddStudentsToQuizService');
-const ShowQuizzesFromTeacher = require('../services/ShowQuizzesFromTeacherService');
+const ListUserQuizzesService = require('../services/ListUserQuizzesService');
 const ShowFullQuizInformationService = require('../services/ShowFullQuizInformationService');
 
 const quizzesRouter = Router();
@@ -33,12 +33,12 @@ quizzesRouter.post('/', async (request, response) => {
 });
 
 quizzesRouter.get('/', async (request, response) => {
-  const teacher_id = request.user.id;
+  const user_id = request.user.id;
 
   try {
-    const showQuizzes = new ShowQuizzesFromTeacher();
+    const listUserQuizzes = new ListUserQuizzesService();
 
-    const quizzes = await showQuizzes.execute(teacher_id);
+    const quizzes = await listUserQuizzes.execute(user_id);
 
     return response.json(quizzes);
   } catch (error) {
