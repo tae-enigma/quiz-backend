@@ -36,14 +36,6 @@ class ListUserQuizzesService {
 
     if (user.type === 'teacher') {
       quizzes = await this.quizzesRepository.findAllByTeacherId(user_id);
-      quizzes = quizzes.map(quiz => {
-        const { User, ...rest } = quiz.get({ plain: true });
-
-        return {
-          ...rest,
-          teacher_name: User.name,
-        };
-      });
     } else {
       quizzes = await this.quizzesRepository.findAllByStudentId(user_id);
 
