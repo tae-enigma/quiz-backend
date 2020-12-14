@@ -36,6 +36,23 @@ class StudentsRepository {
     return students;
   }
 
+  async findStudentByUserIdAndQuizId({ user_id, quiz_id }) {
+    const user = await models.User.findOne({
+      where: {
+        id: user_id,
+      },
+      include: {
+        model: models.StudentQuiz,
+        where: {
+          quiz_id,
+        },
+        required: true,
+      },
+    });
+
+    return user;
+  }
+
   async findAllByStudentsIdFromQuiz(students_ids, quiz_id) {
     const students = await models.StudentQuiz.findAll({
       where: {

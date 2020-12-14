@@ -48,11 +48,12 @@ quizzesRouter.get('/', async (request, response) => {
 
 quizzesRouter.get('/:quiz_id', async (request, response) => {
   const { quiz_id } = request.params;
+  const user_id = request.user.id;
 
   try {
     const showFullQuizInformation = new ShowFullQuizInformationService();
 
-    const quiz = await showFullQuizInformation.execute(quiz_id);
+    const quiz = await showFullQuizInformation.execute({ quiz_id, user_id });
 
     return response.json(quiz);
   } catch (error) {
