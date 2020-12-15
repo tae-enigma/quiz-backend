@@ -24,9 +24,9 @@ module.exports = {
    */
   millisecondsToTimeString: milliseconds => {
     // let millis = milliseconds % 1000;
-    const second = Number((milliseconds / 1000) % 60);
-    const minute = Number((milliseconds / (1000 * 60)) % 60);
-    const hour = Number((milliseconds / (1000 * 60 * 60)) % 24);
+    const second = Math.floor(Number((milliseconds / 1000) % 60));
+    const minute = Math.floor(Number((milliseconds / (1000 * 60)) % 60));
+    const hour = Math.floor(Number((milliseconds / (1000 * 60 * 60)) % 24));
 
     return `${String(hour).padStart(2, '0')}:${String(minute).padStart(
       2,
