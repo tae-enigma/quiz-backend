@@ -4,7 +4,7 @@ module.exports = {
    * @param {String} timeString
    * @returns {Number}
    */
-  timeStringToMillisecods: timeString => {
+  timeStringToMilliseconds: timeString => {
     const timeArray = timeString.split(':');
 
     const [hours, minutes, seconds] = timeArray.map(value => Number(value));
