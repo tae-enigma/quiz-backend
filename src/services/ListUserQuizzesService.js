@@ -40,11 +40,10 @@ class ListUserQuizzesService {
       quizzes = await this.quizzesRepository.findAllByStudentId(user_id);
 
       quizzes = quizzes.map(quiz => {
-        const { StudentQuizzes: _, User, ...rest } = quiz.get({ plain: true });
+        const { StudentQuizzes: _, ...rest } = quiz.get({ plain: true });
 
         return {
           ...rest,
-          teacher_name: User.name,
         };
       });
     }
