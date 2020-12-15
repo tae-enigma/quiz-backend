@@ -1,4 +1,5 @@
 const QuizzesRepository = require('../repositories/QuizzesRepository');
+const UsersRepository = require('../repositories/UsersRepository');
 const formatTime = require('../utils/formatTime');
 
 /**
@@ -29,6 +30,7 @@ const formatTime = require('../utils/formatTime');
 class CreateQuizService {
   constructor() {
     this.quizzesRepository = new QuizzesRepository();
+    this.usersRepository = new UsersRepository();
   }
 
   /**
@@ -43,6 +45,12 @@ class CreateQuizService {
     question_team_qty_limit,
     teacher_id,
   }) {
+    const teacher = await this.usersRepository.findById(teacher_id);
+
+    if (!teacher || teacher.type !== 'teacher') {
+      throw new Error('Teacher with this id does not exists');
+    }
+
     const milliseconds = formatTime.timeStringToMilliseconds(time_limit);
 
     const quiz = await this.quizzesRepository.create({
@@ -52,7 +60,10 @@ class CreateQuizService {
       question_team_qty_limit,
       teacher_id,
     });
-    return quiz;
+    return {
+      ...quiz.get({ plain: true }),
+      teacher,
+    };
   }
 }
 
