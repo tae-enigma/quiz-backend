@@ -1,3 +1,6 @@
+const { millisecondsToTimeString } = require('../utils/formatTime');
+const { getQuizStatusByStartTime } = require('../utils/quizStatus');
+
 const StudentsRepository = require('../repositories/StudentsRepository');
 const UsersRepository = require('../repositories/UsersRepository');
 const QuizzesRepository = require('../repositories/QuizzesRepository');
@@ -18,7 +21,22 @@ class ShowFullQuizInformationService {
 
     const quiz = await this.quizzesRepository.findById(quiz_id);
 
-    return quiz;
+    if (!quiz) {
+      throw new Error('Quiz does not exists');
+    }
+
+    const formated_time_limit = millisecondsToTimeString(quiz.time_limit);
+
+    const status = getQuizStatusByStartTime({
+      start_time: quiz.start,
+      time_limit: quiz.time_limit,
+    });
+
+    return {
+      ...quiz.get({ plain: true }),
+      formated_time_limit,
+      status,
+    };
   }
 }
 
