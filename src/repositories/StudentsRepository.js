@@ -6,7 +6,7 @@ const models = require('../models');
  * @property { string } student_id
  * @property { string } quiz_id
  * @property { number } points
- * @property { string } team
+ * @property { 'radiant' | 'dire' } team
  *
  */
 
@@ -16,11 +16,19 @@ const models = require('../models');
  * @property { string } student_id
  * @property { string } quiz_id
  * @property { number } points
- * @property { string } team
+ * @property { 'radiant' | 'dire' } team
  * @property { Date } createdAt
  * @property { Date } updatedAt
  */
 
+/**
+ * @typedef { Object } Student
+ * @property { string } id
+ * @property { string } name
+ * @property { string } email
+ * @property { string } name
+ * @property { Array<StudentQuiz> } quizzes
+ */
 /**
  * @class StudentsRepository
  */
@@ -36,6 +44,13 @@ class StudentsRepository {
     return students;
   }
 
+  /**
+   *
+   * @param { Object } request
+   * @param { string } request.user_id
+   * @param { string } request.quiz_id
+   * @returns { Promise<Student> }
+   */
   async findStudentByUserIdAndQuizId({ user_id, quiz_id }) {
     const user = await models.User.findOne({
       where: {

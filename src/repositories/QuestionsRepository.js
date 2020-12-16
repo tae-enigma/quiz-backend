@@ -19,6 +19,16 @@ const models = require('../models');
  * @property { boolean } is_selected
  * @property { string} student_id
  * @property { string } quiz_id
+ * @property { Array<Option> } options
+ * @property { Date } createdAt
+ * @property { Date } updatedAt
+ */
+
+/**
+ * @typedef { Object } Option
+ * @property { string } id
+ * @property { string } description
+ * @property { boolean } is_correct
  * @property { Date } createdAt
  * @property { Date } updatedAt
  */
@@ -118,6 +128,31 @@ class QuestionsRepository {
       include: {
         model: models.Option,
         as: 'options',
+      },
+    });
+
+    return questions;
+  }
+
+  /**
+   *
+   * @param { Object } request
+   * @param { string } request.quiz_id
+   * @param { 'dire' | 'radiant' } request.team
+   *
+   * @returns { Array<Question> }
+   */
+
+  async findSelectedQuestionsByQuizIdAndStudentsTeam({ quiz_id, team }) {
+    const questions = await models.Question.findAll({
+      where: { quiz_id, team, is_selected: true },
+      order: [['level']],
+      include: {
+        model: models.Option,
+        as: 'options',
+        attributes: {
+          exclude: ['is_correct'],
+        },
       },
     });
 

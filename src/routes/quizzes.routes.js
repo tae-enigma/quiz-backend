@@ -9,6 +9,7 @@ const ListUserQuizzesService = require('../services/ListUserQuizzesService');
 const ShowQuizInformationsService = require('../services/ShowQuizInformationsService');
 const ShowAllStudentsFromQuizService = require('../services/ShowAllStudentsFromQuizService');
 const StartQuizService = require('../services/StartQuizService');
+const GetStudentQuizReplyService = require('../services/GetStudentQuizReplyService');
 
 const quizzesRouter = Router();
 
@@ -120,6 +121,24 @@ quizzesRouter.patch('/:quiz_id/start', async (request, response) => {
     return response.status(400).json({ error: error.message });
   }
 });
+
+quizzesRouter.get('/:quiz_id/reply', async (request, response) => {
+  try {
+    const { quiz_id } = request.params;
+    const { user } = request;
+
+    const getStudentQuizReply = new GetStudentQuizReplyService();
+
+    const quizRepy = await getStudentQuizReply.execute({
+      quiz_id,
+      user_id: user.id,
+    });
+    return response.json(quizRepy);
+  } catch (error) {
+    return response.status(400).json({ error: error.message });
+  }
+});
+
 quizzesRouter.use('/', questionsRouter);
 
 module.exports = quizzesRouter;
