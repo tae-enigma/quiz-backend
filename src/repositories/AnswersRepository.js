@@ -41,6 +41,24 @@ class AnswersRepository {
 
     return answer;
   }
+
+  /**
+   *
+   * @param { string } student_id
+   * @returns { Promise<Answer> }
+   */
+  async findallByStudentId(student_id) {
+    const answers = await models.Answer.findAll({
+      where: {
+        student_id,
+      },
+      include: {
+        model: models.Option,
+        as: 'option',
+      },
+    });
+    return answers;
+  }
 }
 
 module.exports = AnswersRepository;
