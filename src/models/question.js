@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
       },
-      description: DataTypes.STRING,
+      description: DataTypes.TEXT,
       team: DataTypes.STRING,
       level: {
         type: DataTypes.INTEGER,

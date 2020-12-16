@@ -1,7 +1,5 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+const { Model } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   class option extends Model {
     /**
@@ -10,22 +8,25 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      this.hasOne(models.Answer, {foreignKey: 'question_id'})
-      this.belongsTo(models.Question, {foreignKey: 'question_id'})
+      this.hasOne(models.Answer, { foreignKey: 'question_id' });
+      this.belongsTo(models.Question, { foreignKey: 'question_id' });
     }
-  };
-  option.init({
-    id: {
-      type: DataTypes.UUID,
-      defaultValue: DataTypes.UUIDV4,
-      primaryKey: true,
+  }
+  option.init(
+    {
+      id: {
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
+        primaryKey: true,
+      },
+      is_correct: DataTypes.BOOLEAN,
+      description: DataTypes.TEXT,
     },
-    is_correct: DataTypes.BOOLEAN,
-    description: DataTypes.STRING
-  }, {
-    sequelize,
-    modelName: 'Option',
-    tableName: 'options',
-  });
+    {
+      sequelize,
+      modelName: 'Option',
+      tableName: 'options',
+    },
+  );
   return option;
 };
