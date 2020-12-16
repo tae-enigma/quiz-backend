@@ -39,6 +39,10 @@ class OptionsRepository {
   async findById(id) {
     const option = await models.Option.findOne({
       where: { id },
+      include: {
+        model: models.Question,
+        as: 'question',
+      },
     });
 
     return option;

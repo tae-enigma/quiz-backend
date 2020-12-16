@@ -49,6 +49,19 @@ class AnswerQuestionService {
       throw new Error('It is not a valid option');
     }
 
+    const answers = await this.answersRepository.findallByStudentId(
+      user.quizzes[0].id,
+    );
+
+    const hasAnswered = answers.find(a => {
+      const answer = a.get({ plain: true });
+      return answer.option.question_id === option.question_id;
+    });
+
+    if (hasAnswered) {
+      throw new Error('You already answered this question');
+    }
+
     const question = await this.questionsRepository.findById(
       option.question_id,
     );
