@@ -1,14 +1,17 @@
-const {Answer} = require('../models')
+const models = require('../models');
 
 /**
- * @typedef { Object } AnswersDTO
+ * @typedef { Object } AnswerDTO
  * @property { string } student_id
  * @property { string } option_id
+ * @property { 'hit' | 'miss' } type
+ * @property { Number } gold
+ * @property { Number } xp
  *
  */
 
 /**
- * @typedef { Object } Answers
+ * @typedef { Object } Answer
  * @property { string } id
  * @property { string } student_id
  * @property { string } option_id
@@ -20,22 +23,24 @@ const {Answer} = require('../models')
  * @class AnswersRepository
  */
 class AnswersRepository {
-
   /**
-   * 
-   * @param {AnswersDTO} data
-   * @returns {Promise<Answers>} 
+   *
+   * @param { AnswerDTO } data
+   * @returns { Promise<Answer> }
    */
-  async create({student_id, option_id}){
-    const answer = Answer.build({
-      student_id, 
-      option_id
-    })
+  async create({ student_id, option_id, xp, gold, type }) {
+    const answer = models.Answer.build({
+      student_id,
+      option_id,
+      xp,
+      gold,
+      type,
+    });
 
-    await answer.save()
+    await answer.save();
 
-    return answer
+    return answer;
   }
 }
 
-module.exports = AnswersRepository
+module.exports = AnswersRepository;
