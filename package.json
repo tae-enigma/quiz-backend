@@ -4,6 +4,7 @@
   "main": "./src/server.js",
   "license": "MIT",
   "scripts": {
+    "run:server": "node ./src/server.js",
     "dev:server": "nodemon",
     "migrate:run": "sequelize-cli db:migrate",
     "migrate:revert": "sequelize-cli db:migrate:undo:all"

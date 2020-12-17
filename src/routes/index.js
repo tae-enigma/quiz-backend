@@ -8,6 +8,10 @@ const ensureAuthenticated = require('../middlewares/ensureAuthenticated');
 
 const routes = Router();
 
+routes.get('/', (req, res) =>{
+  res.send('backend its work!')
+})
+
 routes.use('/users', usersRouter);
 routes.use('/sessions', sessionsRouter);
 routes.use('/quizzes', ensureAuthenticated, quizzesRouter);
