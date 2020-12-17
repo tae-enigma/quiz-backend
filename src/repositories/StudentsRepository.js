@@ -99,6 +99,24 @@ class StudentsRepository {
 
     return students;
   }
+
+  async findQuizRankingByQuizId(quiz_id) {
+    const ranking = await models.User.findAll({
+      include: {
+        model: models.StudentQuiz,
+        as: 'quizzes',
+        where: {
+          quiz_id,
+        },
+        include: {
+          model: models.Answer,
+          as: 'answers',
+        },
+      },
+    });
+
+    return ranking;
+  }
 }
 
 module.exports = StudentsRepository;

@@ -1,7 +1,5 @@
-'use strict';
-const {
-  Model, Sequelize
-} = require('sequelize');
+const { Model } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   class student_quiz extends Model {
     /**
@@ -10,25 +8,30 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      this.belongsTo(models.User, {foreignKey: 'student_id'})
-      this.belongsTo(models.Quiz, {foreignKey: 'quiz_id'})
+      this.belongsTo(models.User, { foreignKey: 'student_id' });
+      this.belongsTo(models.Quiz, { foreignKey: 'quiz_id' });
+      this.hasMany(models.Answer, { foreignKey: 'student_id', as: 'answers' });
     }
-  };
-  student_quiz.init({
-    id: {
-      type: DataTypes.UUID,
-      defaultValue: DataTypes.UUIDV4,
-      primaryKey: true,
+  }
+
+  student_quiz.init(
+    {
+      id: {
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
+        primaryKey: true,
+      },
+      points: {
+        type: DataTypes.DECIMAL,
+        defaultValue: 0,
+      },
+      team: DataTypes.STRING,
     },
-    points: {
-      type: DataTypes.DECIMAL,
-      defaultValue: 0
+    {
+      sequelize,
+      modelName: 'StudentQuiz',
+      tableName: 'student_quizzes',
     },
-    team : DataTypes.STRING
-  }, {
-    sequelize,
-    modelName: 'StudentQuiz',
-    tableName: 'student_quizzes',
-  });
+  );
   return student_quiz;
 };

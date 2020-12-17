@@ -12,6 +12,7 @@ const StartQuizService = require('../services/StartQuizService');
 const GetStudentQuizReplyService = require('../services/GetStudentQuizReplyService');
 const AnswerQuestionService = require('../services/AnswerQuestionService');
 const ListStudentAnswersService = require('../services/ListStudentAnswersService');
+const ShowRankingFromQuizService = require('../services/ShowRankingFromQuizService');
 
 const quizzesRouter = Router();
 
@@ -172,6 +173,24 @@ quizzesRouter.get('/:quiz_id/answer', async (request, response) => {
       user_id: user.id,
     });
     return response.json(answers);
+  } catch (error) {
+    return response.status(400).json({ error: error.message });
+  }
+});
+
+quizzesRouter.get('/:quiz_id/ranking', async (request, response) => {
+  try {
+    const { quiz_id } = request.params;
+    const { user } = request;
+
+    const showRankingFromQuiz = new ShowRankingFromQuizService();
+
+    const ranking = await showRankingFromQuiz.execute({
+      quiz_id,
+      user_id: user.id,
+    });
+
+    return response.json(ranking);
   } catch (error) {
     return response.status(400).json({ error: error.message });
   }
