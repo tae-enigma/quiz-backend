@@ -1,1 +1,2 @@
-web: npm run server
+web: npm run migrate:run
+web: npm  run server
