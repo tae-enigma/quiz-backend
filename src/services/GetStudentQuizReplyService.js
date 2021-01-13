@@ -1,5 +1,6 @@
 const StudentsRepository = require('../repositories/StudentsRepository');
 const QuizzesRepository = require('../repositories/QuizzesRepository');
+const AnswersRepository = require('../repositories/AnswersRepository');
 const { STARTED, getQuizStatusByStartTime } = require('../utils/quizStatus');
 const QuestionsRepository = require('../repositories/QuestionsRepository');
 
@@ -8,6 +9,7 @@ class GetStudentQuizReplyService {
     this.studentsRepository = new StudentsRepository();
     this.quizzesRepository = new QuizzesRepository();
     this.questionsRepository = new QuestionsRepository();
+    this.answersRepository = new AnswersRepository();
   }
 
   async execute({ quiz_id, user_id }) {
@@ -45,9 +47,26 @@ class GetStudentQuizReplyService {
       { quiz_id, team: adversaryTeam },
     );
 
+    const answers = await this.answersRepository.findallByStudentId(
+      user.quizzes[0].id,
+    );
+
+    const formatedQuestions = questions.map(q => {
+      const question = q.get({ plain: true });
+
+      const answered = answers.find(
+        answer => answer.option.question_id === question.id,
+      );
+
+      return {
+        ...question,
+        answered: !!answered,
+      };
+    });
+
     return {
       quiz,
-      questions,
+      questions: formatedQuestions,
     };
   }
 }
